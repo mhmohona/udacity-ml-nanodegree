@@ -46,10 +46,14 @@ class Graph(object):
         """Don't return a list of edge objects!
         Return a list of triples that looks like this:
         (Edge Value, From Node Value, To Node Value)"""
-        edge_list = []
-        for edge_object in self.edges:
-            edge_list.append((edge_object.value, edge_object.node_from.value, edge_object.node_to.value))
-        return edge_list
+        return [
+            (
+                edge_object.value,
+                edge_object.node_from.value,
+                edge_object.node_to.value,
+            )
+            for edge_object in self.edges
+        ]
 
     def get_adjacency_list(self):
         """Don't return any Node or Edge objects!
@@ -78,7 +82,7 @@ class Graph(object):
         Store the edge values in each spot,
         and a 0 if no edge exists."""
         max_index = self.find_max_index()
-        adjacency_matrix = [[0] * (max_index + 1) for i in range(max_index + 1)]
+        adjacency_matrix = [[0] * (max_index + 1) for _ in range(max_index + 1)]
         for edge_object in self.edges:
             edge_value = edge_object.value
             edge_to_node = edge_object.node_to.value

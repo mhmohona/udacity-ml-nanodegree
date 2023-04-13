@@ -33,8 +33,8 @@ class LinkedList(object):
         Assume the first position is "1".
         Return "None" if position is not in the list."""
         current = self.head
-        count = 1
         if self.head:
+            count = 1
             while count < position:
                 current = current.next
                 count += 1
@@ -48,11 +48,11 @@ class LinkedList(object):
         Inserting at position 3 means between
         the 2nd and 3rd elements."""
         current = self.head
-        count = 1
         if position == 1:
             new_element.next = current
             self.head = new_element
         else:
+            count = 1
             while count < position - 1:
                 current = current.next
                 count += 1

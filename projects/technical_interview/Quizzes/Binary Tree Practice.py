@@ -39,7 +39,7 @@ class BinaryTree(object):
         recursive print solution."""
         if start:
             if traversal != '':
-                traversal += '-' + str(start.value)
+                traversal += f'-{str(start.value)}'
             else:
                 traversal = str(start.value)
             traversal = self.preorder_print(start.left, traversal)

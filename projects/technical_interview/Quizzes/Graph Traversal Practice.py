@@ -174,7 +174,7 @@ class Graph(object):
         ret_list = []
         # Your code here
         queue = [start_node]
-        while len(queue) > 0:
+        while queue:
             node = queue.pop(0)
             if node.value not in ret_list:
                 ret_list.append(node.value)

@@ -55,7 +55,7 @@ class Environment(object):
 
         # Dummy agents
         self.num_dummies = 3  # no. of dummy agents
-        for i in xrange(self.num_dummies):
+        for _ in xrange(self.num_dummies):
             self.create_agent(DummyAgent)
 
         # Primary agent
@@ -139,11 +139,10 @@ class Environment(object):
                 if oncoming != 'left':  # we don't want to override oncoming == 'left'
                     oncoming = other_heading
             elif (heading[1] == other_state['heading'][0] and -heading[0] == other_state['heading'][1]):
-                if right != 'forward' and right != 'left':  # we don't want to override right == 'forward or 'left'
+                if right not in ['forward', 'left']:  # we don't want to override right == 'forward or 'left'
                     right = other_heading
-            else:
-                if left != 'forward':  # we don't want to override left == 'forward'
-                    left = other_heading
+            elif left != 'forward':  # we don't want to override left == 'forward'
+                left = other_heading
 
         return {'light': light, 'oncoming': oncoming, 'left': left, 'right': right}  # TODO: make this a namedtuple
 
@@ -236,16 +235,19 @@ class DummyAgent(Agent):
         inputs = self.env.sense(self)
 
         action_okay = True
-        if self.next_waypoint == 'right':
-            if inputs['light'] == 'red' and inputs['left'] == 'forward':
-                action_okay = False
-        elif self.next_waypoint == 'forward':
+        if self.next_waypoint == 'forward':
             if inputs['light'] == 'red':
                 action_okay = False
         elif self.next_waypoint == 'left':
-            if inputs['light'] == 'red' or (inputs['oncoming'] == 'forward' or inputs['oncoming'] == 'right'):
+            if inputs['light'] == 'red' or inputs['oncoming'] in [
+                'forward',
+                'right',
+            ]:
                 action_okay = False
 
+        elif self.next_waypoint == 'right':
+            if inputs['light'] == 'red' and inputs['left'] == 'forward':
+                action_okay = False
         action = None
         if action_okay:
             action = self.next_waypoint

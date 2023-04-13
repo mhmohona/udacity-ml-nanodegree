@@ -41,8 +41,7 @@ class LearningAgent(Agent):
         inputs = self.env.sense(self)
         deadline = self.env.get_deadline(self)
         # Define state
-        self.state = 'deadline: {}, light: {}, left: {}, oncoming: {}, next_waypoint: {}'.\
-            format(deadline, inputs['light'], inputs['left'], inputs['oncoming'], self.next_waypoint)
+        self.state = f"deadline: {deadline}, light: {inputs['light']}, left: {inputs['left']}, oncoming: {inputs['oncoming']}, next_waypoint: {self.next_waypoint}"
         return self.state
 
 
@@ -81,11 +80,8 @@ class LearningAgent(Agent):
             count = Q_s.count(maxQ)
             if count > 1: # there're multiple actions with max Q value
                 best_actions = [i for i in range(len(self.allLegalActions)) if Q_s[i] == maxQ]
-                if j in best_actions: # if next way point is in best actions, choose it
-                    i = j
-                else:
-                    i = random.choice(best_actions) # otherwise, choose a random action
-                # i = random.choice(best_actions)
+                i = j if j in best_actions else random.choice(best_actions)
+                        # i = random.choice(best_actions)
             else:
                 i = Q_s.index(maxQ)
             action = self.allLegalActions[i]

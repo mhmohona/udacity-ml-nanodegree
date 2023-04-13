@@ -33,7 +33,7 @@ def ModelLearning(X, y):
         # Calculate the training and testing scores
         sizes, train_scores, test_scores = curves.learning_curve(regressor, X, y, \
             cv = cv, train_sizes = train_sizes, scoring = 'r2')
-        
+
         # Find the mean and standard deviation for smoothing
         train_std = np.std(train_scores, axis = 1)
         train_mean = np.mean(train_scores, axis = 1)
@@ -48,14 +48,14 @@ def ModelLearning(X, y):
             train_mean + train_std, alpha = 0.15, color = 'r')
         ax.fill_between(sizes, test_mean - test_std, \
             test_mean + test_std, alpha = 0.15, color = 'g')
-        
+
         # Labels
-        ax.set_title('max_depth = %s'%(depth))
+        ax.set_title(f'max_depth = {depth}')
         ax.set_xlabel('Number of Training Points')
         ax.set_ylabel('Score')
         ax.set_xlim([0, X.shape[0]*0.8])
         ax.set_ylim([-0.05, 1.05])
-    
+
     # Visual aesthetics
     ax.legend(bbox_to_anchor=(1.05, 2.05), loc='lower left', borderaxespad = 0.)
     fig.suptitle('Decision Tree Regressor Learning Performances', fontsize = 16, y = 1.03)

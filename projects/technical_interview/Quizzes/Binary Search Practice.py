@@ -23,14 +23,10 @@ def binary_search(input_array, value):
     while right > left and input_array[mid] != value:
         if input_array[mid] < value:
             left = mid + 1
-            mid = int((right + left) / 2)
         else:
             right = mid - 1
-            mid = int((right + left) / 2)
-    if input_array[mid] == value:
-        return mid
-    else:
-        return -1
+        mid = int((right + left) / 2)
+    return mid if input_array[mid] == value else -1
 
 
 test_list = [1, 3, 9, 11, 15, 19, 29]
